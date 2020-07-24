@@ -16,7 +16,7 @@ Steps to run-
 7. For evaluation, run 'python nq_eval.py --gold_path=data/dev/v1.0_sample_nq-dev-sample.jsonl.gz --predictions_path=predictions.json'.
 
 Score-
-Current model, after training for 4 epochs gives F1 about 0.37. Prediction file is attached. This evaluation has been done on the sample dev dataset, not the complete dev dataset.
+Current model, after training for 4 epochs gives F1 about 0.37. This evaluation has been done on the sample dev dataset, not the complete dev dataset.
  
 Architecture and design choices-
 For this task, owing to transfer learning I started with a BERT large model pretrained on the SQuAD set. 
