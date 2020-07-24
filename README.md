@@ -7,6 +7,7 @@ Installations required-
 4. absl-py
 
 Steps to run-
+
 0. Clone the repo.
 1. Download simplified train data 'v1.0-simplified_simplified-nq-train.jsonl.gz' and place in data/train.
 2. Run 'python small_data.py' to get 'simplified-nq-train.jsonl' in data/train.
