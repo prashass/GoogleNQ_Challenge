@@ -16,9 +16,43 @@ Steps to run-
 7. For evaluation, run 'python nq_eval.py --gold_path=data/dev/v1.0_sample_nq-dev-sample.jsonl.gz --predictions_path=predictions.json'.
 
 Score-
-Current model, after training for 3 epochs gives F1 0.34444444444444444. Prediction file is attached. This evaluation has been done on the sample dev dataset, not the complete dev dataset.
+Current model, after training for 4 epochs gives F1 about 0.37. Prediction file is attached. This evaluation has been done on the sample dev dataset, not the complete dev dataset.
  
 Architecture and design choices-
-For this task, I started with a BERT large model pretrained on the SQuAD set. 
+For this task, owing to transfer learning I started with a BERT large model pretrained on the SQuAD set. 
 Initial model involved giving the BERT an input of [CLS]<question>[SEP]<document_text>[SEP],
-and extracting start and end tokens within 
+and extracting start and end tokens within the context (document text) that answered the question.
+However, my intuition was that with the large sizes of document text, BERT wouldnt be able
+to generate very useful embeddings.
+
+Next, I took some ideas from the Kaggle challenge for Google NQ dataset. 
+Here, as the input I give [CLS]<question>[SEP]<long answer candidate>[SEP]. 
+The dataset & dataloader collate the input in such a way, that for each question a positive instance
+is created i.e. [CLS]<question>[SEP]<positive long answer candidate>[SEP] where positive candidate is 
+a long answer which is also found in the annotations.
+For each question, a negative instance is also created i.e.
+ [CLS]<question>[SEP]<negative long answer candidate>[SEP] where negative candidate is one which does not
+belong to the annotations.
+So for N questions, we train over 2N instances.
+The span prediction here predicts short answer start and end tokens within these long answer candidates.
+After this, there is a classifier layer which indicates whether the long answer candidate in the current
+instance is a valid answer or not by 0 for NO ANSWER and 1 for LONG ANSWER.
+Then taking the cross entropy loss of short answer start logits, end logits and class logits with gold labels,
+we propagate the sum of these losses backward and optimize. 
+The reason for including this was to benefit from multitask learning where learning 2 similar tasks
+can benefit their performances.
+
+For evaluation,
+I relied on the output of the final classifier layer. Here I evaluated over each candidate of each question.
+The candidate with the highest long answer score was selected and its long answer start and end tokens were
+stored as the prediction.
+
+The results I received were below my expectations of the model, which I believe is due to the simplistic
+evaluation procedure. Also, with more compute power, I would train it over the entire dataset distributedly.
+Also, try to use ensemble models for better inference.
+
+Feedback about the challenge-
+It was challenging and enjoyable. Would have enjoyed spending some more time on it and getting better results.
+
+Charity-
+Pennsylvania Women Work (https://greatnonprofits.org/org/pennsylvania-women-work)
