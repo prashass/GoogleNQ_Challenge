@@ -21,18 +21,18 @@ done on the sample dev dataset, not the complete dev dataset.
  
 Architecture and design choices-
 For this task, owing to transfer learning I started with a BERT large model pretrained on the SQuAD set. 
-Initial model involved giving the BERT an input of [CLS]<question>[SEP]<document_text>[SEP],
+Initial model involved giving the BERT an input of [CLS]"question"[SEP]"document_text"[SEP],
 and extracting start and end tokens within the context (document text) that answered the question.
 However, my intuition was that with the large sizes of document text, BERT wouldnt be able
 to generate very useful embeddings.
 
 Next, I took some ideas from the Kaggle challenge for Google NQ dataset. 
-Here, as the input I give [CLS]<question>[SEP]<long answer candidate>[SEP]. 
+Here, as the input I give [CLS]"question"[SEP]"long answer candidate"[SEP]. 
 The dataset & dataloader collate the input in such a way, that for each question a positive instance
-is created i.e. [CLS]<question>[SEP]<positive long answer candidate>[SEP] where positive candidate is 
+is created i.e. [CLS]"question"[SEP]"positive long answer candidate"[SEP] where positive candidate is 
 a long answer which is also found in the annotations.
 For each question, a negative instance is also created i.e.
- [CLS]<question>[SEP]<negative long answer candidate>[SEP] where negative candidate is one which does not
+ [CLS]"question"[SEP]"negative long answer candidate"[SEP] where negative candidate is one which does not
 belong to the annotations.
 So for N questions, we train over 2N instances.
 The span prediction here predicts short answer start and end tokens within these long answer candidates.
