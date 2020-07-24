@@ -11,7 +11,7 @@ Steps to run-
 2. Run 'python small_data.py' to get 'simplified-nq-train.jsonl' in data/train.
 3. Open train.ipynb and run all cells.
 4. After this we will have 4 saved models in 'models/'.
-5. Rename 'model_100k2.pth' to 'pytorch_model.bin'.
+5. Rename 'model_100k3.pth' to 'pytorch_model.bin'.
 6. Open test.ipynb and run all cells. The prediction json file will be created.
 7. For evaluation, run 'python nq_eval.py --gold_path=data/dev/v1.0_sample_nq-dev-sample.jsonl.gz --predictions_path=predictions.json'.
 
