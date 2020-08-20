@@ -53,9 +53,3 @@ stored as the prediction.
 The results I received were below my expectations of the model, which I believe is due to the simplistic
 evaluation procedure. Also, with more compute power, I would train it over the entire dataset distributedly.
 Also, try to use ensemble models for better inference.
-
-Feedback about the challenge-
-It was challenging and enjoyable. Would have enjoyed spending some more time on it and getting better results.
-
-Charity-
-Pennsylvania Women Work (https://greatnonprofits.org/org/pennsylvania-women-work)
